@@ -8,15 +8,41 @@ body {
     width: 100vw;
     height: 100vh;
     margin: 0;
+    font-size: 14px;
 }
 
 h1 {
     text-align: center;
     font-weight: 200;
-    font-size: 72px;
+    font-size: 64px;
     color: white;
     margin: 0;
     padding: 32px 0;
+    letter-spacing: 8px;
+}
+
+h2 {
+    font-size: 16px;
+    margin: 0 0 12px 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    margin-top: 8px;
+}
+
+button {
+    font-size: 14px;
+    padding: 12px;
+    border-style: none;
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
 }
 
 .content {
@@ -32,6 +58,17 @@ h1 {
     height: 640px;
     padding: 32px;
     color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    overflow: scroll;
+}
+
+.displayBtn {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 #pad {
