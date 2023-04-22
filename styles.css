@@ -1,7 +1,10 @@
-
+* {
+    box-sizing: border-box;
+    font-family: 'Montserrat Alternates', 'Space Grotesk', sans-serif;
+}
 
 body {
-    background-color: rgb(76, 20, 20);
+    background-color: rgb(7, 75, 82);
     width: 100vw;
     height: 100vh;
     margin: 0;
@@ -9,7 +12,6 @@ body {
 
 h1 {
     text-align: center;
-    font-family: 'Montserrat Alternates', 'Space Grotesk', sans-serif;
     font-weight: 200;
     font-size: 72px;
     color: white;
@@ -17,15 +19,30 @@ h1 {
     padding: 32px 0;
 }
 
+.content {
+    margin: 0 40px;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+#settings {
+    background-color: rgba(0, 0, 0, 50%);
+    width: 400px;
+    height: 640px;
+    padding: 32px;
+    color: white;
+}
+
 #pad {
-    margin: 0 auto;
-    width: 600px;
-    height: 600px;
+    width: 640px;
+    height: 640px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 1px;
-    background-color: white;
-    border: 10px solid white;
+    background-color: rgba(0, 0, 0, 50%);
+    flex-shrink: 0;
 }
 
 .singleRow {
@@ -35,6 +52,6 @@ h1 {
 }
 
 .singleSq {
-    background-color: grey;
+    background-color: rgb(245, 245, 245);
     width: 100%;
 }

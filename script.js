@@ -1,6 +1,6 @@
 const pad = document.querySelector("#pad");
 
-let gridSize = prompt('Choose a size between 1 and 100', '');
+let gridSize = 16;
 
 // Create grid
 for (let i = 0; i < gridSize; i++) {
