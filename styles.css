@@ -45,6 +45,11 @@ button {
     color: white;
 }
 
+.clicked {
+    background-color: white;
+    color: rgb(8, 38, 41);
+}
+
 .content {
     margin: 0 40px;
     display: flex;
