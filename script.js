@@ -6,70 +6,155 @@ const eraserBtn = document.querySelector('#eraserBtn');
 const sizeBtn = document.querySelector('#sizeBtn');
 const clearBtn = document.querySelector('#clearBtn');
 
-// Create grid
+// Create and delete grid
 function createGrid(gridSize) {
     for (let i = 0; i < gridSize; i++) {
-      const singleRow = document.createElement("div");
-      singleRow.setAttribute("class", "singleRow");
-      for (let j = 0; j < gridSize; j++) {
-        const squares = document.createElement("div");
-        squares.setAttribute("class", "singleSq");
-        singleRow.appendChild(squares);
-      }
-      pad.appendChild(singleRow);
+        const singleRow = document.createElement("div");
+        singleRow.setAttribute("class", "singleRow");
+        for (let j = 0; j < gridSize; j++) {
+            const squares = document.createElement("div");
+            squares.setAttribute("class", "singleSq");
+            singleRow.appendChild(squares);
+        }
+        pad.appendChild(singleRow);
     }
 }
 
-createGrid(16);
+function deleteGrid() {
+    const singleRow = document.querySelectorAll(".singleRow");
+    const squares = document.querySelectorAll(".singleSq");
+    squares.forEach(square => square.remove());
+    singleRow.forEach(row => row.remove());
+}
+
+let defaultGrid = createGrid(16);
 
 //Generate random color
 function getRandomColor() {
-  let r = Math.floor(Math.random() * 255);
-  let g = Math.floor(Math.random() * 255);
-  let b = Math.floor(Math.random() * 255);
-  return [r, g, b];
+    let r = Math.floor(Math.random() * 255);
+    let g = Math.floor(Math.random() * 255);
+    let b = Math.floor(Math.random() * 255);
+    return [r, g, b];
 }
 
 // Set hover effect
-const singleSq = document.querySelectorAll(".singleSq");
+let singleSq = document.querySelectorAll(".singleSq");
 
-// Make buttons clickable
-function useBlack() {
-    singleSq.forEach(square => square.addEventListener('mouseover', () => {square.setAttribute('style', 'background-color: black;')}))
+// RAINBOW BUTTON
+let rainbowCounter = 0;
+
+function useRainbow(e) {
+    e.target.setAttribute("style", `background-color: rgb(${getRandomColor()});`);
 }
 
-blackBtn.addEventListener('click', useBlack);
-blackBtn.addEventListener('click', () => {
-    blackBtn.classList.add('clicked');
-    rainbowBtn.classList.remove('clicked');
-    eraserBtn.classList.remove('clicked');
-});
-
-function useRainbow() {
-    singleSq.forEach((square) =>
-    square.addEventListener(
-        "mouseover",
-        () => {
-            square.setAttribute("style", `background-color: rgb(${getRandomColor()});`);
-        }
-        )
-        );
-    }
-    
-rainbowBtn.addEventListener('click', useRainbow);
 rainbowBtn.addEventListener('click', () => {
-    blackBtn.classList.remove('clicked');
-    rainbowBtn.classList.add('clicked');
-    eraserBtn.classList.remove('clicked');
+    rainbowCounter++;
+    console.log(`Rainbow Counter: ${rainbowCounter}`);
 });
 
-function useEraser() {
-    singleSq.forEach(square => square.addEventListener('mouseover', () => { square.setAttribute('style', 'background-color: rgb(245, 245, 245);') }))
+rainbowBtn.addEventListener('click', () => {
+    if (rainbowCounter % 2 !== 0) {
+        singleSq.forEach((square) => square.addEventListener("mouseover", useRainbow, { once: true }));
+    } else if (rainbowCounter % 2 === 0) {
+        singleSq.forEach((square) => square.removeEventListener("mouseover", useRainbow));
+    };
+
+});
+rainbowBtn.addEventListener('click', () => {
+    if (rainbowCounter % 2 !== 0) {
+        blackBtn.classList.remove('clicked');
+        rainbowBtn.classList.add('clicked');
+        eraserBtn.classList.remove('clicked');
+    } else {
+        rainbowBtn.classList.remove('clicked');
+    }
+});
+
+// BLACK BUTTON
+let blackCounter = 0;
+
+function useBlack(e) {
+    e.target.setAttribute('style', 'background-color: black;');
 }
 
-eraserBtn.addEventListener('click', useEraser);
+blackBtn.addEventListener('click', () => {
+    blackCounter++;
+    console.log(`Black Counter: ${blackCounter}`);
+});
+
+blackBtn.addEventListener('click', () => {
+    if (blackCounter % 2 !== 0) {
+        singleSq.forEach((square) => square.addEventListener("mouseover", useBlack, { once: true }));
+    } else if (blackCounter % 2 === 0) {
+        singleSq.forEach((square) => square.removeEventListener("mouseover", useBlack));
+    };
+});
+blackBtn.addEventListener('click', () => {
+    if (blackCounter % 2 !== 0) {
+        blackBtn.classList.add('clicked');
+        rainbowBtn.classList.remove('clicked');
+        eraserBtn.classList.remove('clicked');
+    } else {
+        blackBtn.classList.remove('clicked');
+    }
+});
+
+// ERASER BUTTON
+let eraserCounter = 0;
+
+function useEraser(e) {
+    e.target.setAttribute('style', 'background-color: rgb(245, 245, 245);')
+}
+
 eraserBtn.addEventListener('click', () => {
-    eraserBtn.classList.add('clicked');
+    eraserCounter++;
+    console.log(`Eraser Counter: ${eraserCounter}`);
+});
+
+eraserBtn.addEventListener('click', () => {
+    if (eraserCounter % 2 !== 0) {
+        singleSq.forEach((square) => square.addEventListener("mouseover", useEraser, { once: true }));
+    } else if (eraserCounter % 2 === 0) {
+        singleSq.forEach((square) => square.removeEventListener("mouseover", useEraser));
+    };
+});
+eraserBtn.addEventListener('click', () => {
+    if (eraserCounter % 2 !== 0) {
+        eraserBtn.classList.add('clicked');
+        rainbowBtn.classList.remove('clicked');
+        blackBtn.classList.remove('clicked');
+    } else {
+        eraserBtn.classList.remove('clicked');
+    }
+});
+
+// SIZE BUTTON
+function resetButtons() {
+    rainbowCounter = 0;
+    blackCounter = 0;
+    eraserCounter = 0;
+    eraserBtn.classList.remove('clicked');
     rainbowBtn.classList.remove('clicked');
     blackBtn.classList.remove('clicked');
+}
+
+sizeBtn.addEventListener('click', () => {
+    let newSize = prompt("Set your new grid size: pick a number between 1 and 100", "");
+    if (newSize > 0 && newSize < 101) {
+        deleteGrid();
+        createGrid(newSize);
+        resetButtons();
+        singleSq = document.querySelectorAll(".singleSq");
+    } else {
+        alert('What you inserted is not valid. Please, try again.');
+    }
+});
+
+// CLEAR BUTTON
+clearBtn.addEventListener('click', () => {
+    singleSq.forEach(square => square.setAttribute('style', 'background-color: rgb(245, 245, 245);'));
+    singleSq.forEach((square) => square.removeEventListener("mouseover", useRainbow));
+    singleSq.forEach((square) => square.removeEventListener("mouseover", useBlack));
+    singleSq.forEach((square) => square.removeEventListener("mouseover", useEraser));
+    resetButtons();
 });

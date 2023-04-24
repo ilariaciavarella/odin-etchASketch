@@ -24,6 +24,7 @@ h1 {
 h2 {
     font-size: 16px;
     margin: 0 0 12px 0;
+    color: rgb(153, 213, 220);
 }
 
 ul {
@@ -43,6 +44,7 @@ button {
     background-color: transparent;
     border: 1px solid white;
     color: white;
+    cursor: pointer;
 }
 
 .clicked {
